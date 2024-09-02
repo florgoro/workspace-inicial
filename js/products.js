@@ -1,27 +1,38 @@
 // Array para almacenar los productos
 const listaProductos = [];
 
-// Función asincrónica para obtener los productos desde la API 
+// Función asincrónica para obtener los productos desde la API
 async function obtenerProductos() {
-  // Recuperar el id de categoría del local storage
-  const categoryId = localStorage.getItem('selectedCategoryId');
-  
+  const categoryId = localStorage.getItem('catID');
+
   if (!categoryId) {
-    console.error('No se ha encontrado un identificador de categoría en el almacenamiento local.');
+    console.error("No se ha encontrado un id de categorías en el almacenamiento local.");
     return;
   }
-  // URL de la API con el id recuperado
+
+  // URL de la API con el ID
   const apiUrl = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
 
-  // Llama a getJSONData 
-  const result = await getJSONData(apiUrl);
+  try {
+    // Realizar la petición con fetch y esperar la respuesta
+    const response = await fetch(apiUrl);
 
-  // Si la solicitud fue exitosa, verifica el resultado y almacena en listaProductos
-  if (result.status === 'ok') {
-    listaProductos.push(...result.data.products);
+    // Verificar si la respuesta es exitosa
+    if (!response.ok) {
+      throw new Error('Error al obtener los datos');
+    }
+
+    // Convertir la respuesta a JSON y almacenarla en una constante
+    const productosData = await response.json();
+
+    // Almacenar los productos en el array listaProductos
+    listaProductos.push(...productosData.products);
+
+    // Mostrar los productos en el frontend
     mostrarProductos();
-  } else {
-    console.error('Hubo un problema con la solicitud:', result.data);
+  } catch (error) {
+    // Manejo de errores
+    console.error('Hubo un problema con la solicitud:', error);
   }
 }
 
@@ -29,7 +40,7 @@ async function obtenerProductos() {
 function mostrarProductos() {
   const contenedorProductos = document.querySelector('#listaProductos');
   contenedorProductos.innerHTML = ''; // Limpiar el contenedor
-  
+
   // Recorrer cada producto y crear su tarjeta
   listaProductos.forEach(producto => {
     const tarjetaProducto = `
@@ -49,5 +60,5 @@ function mostrarProductos() {
   });
 }
 
-// Llamar a la función para cargar los productos al cargar la página
+// Llamar a la función para obtener y mostrar los productos
 document.addEventListener('DOMContentLoaded', obtenerProductos);
