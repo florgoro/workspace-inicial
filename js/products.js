@@ -1,33 +1,27 @@
 // Array para almacenar los productos
 const listaProductos = [];
 
-// Función asincrónica para obtener los productos desde la API
+// Función asincrónica para obtener los productos desde la API 
 async function obtenerProductos() {
-  // URL de la API
-  const apiUrl = 'https://japceibal.github.io/emercado-api/cats_products/101.json';
-  try {
-    // Realizar la petición con fetch y esperar la respuesta
+  // Recuperar el id de categoría del local storage
+  const categoryId = localStorage.getItem('selectedCategoryId');
+  
+  if (!categoryId) {
+    console.error('No se ha encontrado un identificador de categoría en el almacenamiento local.');
+    return;
+  }
+  // URL de la API con el id recuperado
+  const apiUrl = `https://japceibal.github.io/emercado-api/cats_products/${categoryId}.json`;
 
-    const response = await fetch(apiUrl);
-    // Verificar si la respuesta es exitosa
+  // Llama a getJSONData 
+  const result = await getJSONData(apiUrl);
 
-    if (!response.ok) {
-      throw new Error('Error al obtener los datos');
-    }
-    // Convertir la respuesta a JSON y almacenarla en una constante
-
-    const productosData = await response.json();
-    // Almacenar los productos en el array listaProductos
-
-    listaProductos.push(...productosData.products);
-    // Mostrar los productos en el frontend
-
+  // Si la solicitud fue exitosa, verifica el resultado y almacena en listaProductos
+  if (result.status === 'ok') {
+    listaProductos.push(...result.data.products);
     mostrarProductos();
-  } catch (error) {
-
-    // Manejo de errores
-
-    console.error('Hubo un problema con la solicitud:', error);
+  } else {
+    console.error('Hubo un problema con la solicitud:', result.data);
   }
 }
 
@@ -55,5 +49,5 @@ function mostrarProductos() {
   });
 }
 
-// Llamar a la función para obtener y mostrar los productos
-obtenerProductos();
+// Llamar a la función para cargar los productos al cargar la página
+document.addEventListener('DOMContentLoaded', obtenerProductos);
