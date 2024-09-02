@@ -1,24 +1,32 @@
-document.getElementById('loginForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    let loginForm = document.getElementById('loginForm');
+    let usernameField = document.getElementById('username');
+    let passwordField = document.getElementById('password');
 
-    let email = document.getElementById('email').value;
-    let password = document.getElementById('password').value;
+    if (loginForm && usernameField && passwordField) {
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    if (email === '' || password === '') {
-        alert('Por favor, completa todos los campos.');
+            let username = usernameField.value;
+            let password = passwordField.value;
+
+            if (username === '' || password === '') {
+                alert('Por favor, completa todos los campos.');
+            } else {
+                // Simulación de inicio de sesión exitoso para cualquier correo y contraseña
+                localStorage.setItem('isLoggedIn', 'true'); // Guardar la sesión
+                localStorage.setItem('username', username); // Guardar el nombre de usuario
+                window.location.href = "index.html"; // Redirigir a la página principal
+            }
+        });
     } else {
-        // Simulación de inicio de sesión exitoso para cualquier correo y contraseña
-        localStorage.setItem('isLoggedIn', 'true'); // Guardar la sesión
-        window.location.href = "index.html"; // Redirigir a la página principal
+        console.error('No se encontraron los elementos necesarios en el DOM.');
     }
-});
 
-window.onload = function() {
+    // Código para la redirección basada en el estado de autenticación
     let currentFile = window.location.pathname.split('/').pop();
-
     if (!localStorage.getItem('isLoggedIn')) {
         if (currentFile !== 'login.html') {
-            // Si no ha iniciado sesión y no está en login.html, redirigir a login.html
             window.location.href = "login.html";
         }
     } else {
@@ -29,10 +37,19 @@ window.onload = function() {
                 <a href="#" onclick="logout()">Cerrar Sesión</a>
             `;
         }
+
+        // Mostrar el nombre de usuario en el navbar
+        let username = localStorage.getItem('username');
+        let userLog = document.querySelector('.userLogged');
+        if (userLog && username) {
+            userLog.textContent = 'Bienvenid@,'+ username;
+        }
     }
-};
+});
+
 
 function logout() {
     localStorage.removeItem('isLoggedIn');
-    window.location.href = "login.html";
+    localStorage.removeItem('username');
+    window.location.href = "index.html";
 }
