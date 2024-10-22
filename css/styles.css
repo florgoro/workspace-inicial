@@ -68,8 +68,8 @@ nav a {
 }
 
 footer {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 20rem;
+  padding-bottom: 2rem;
 }
 
 footer p {
@@ -193,9 +193,10 @@ a.custom-card:hover {
 
   transition: all 0.2s ease;
   cursor: pointer;
-
+  
 
 }
+  
 
 .cards:hover{
 
@@ -206,4 +207,178 @@ a.custom-card:hover {
 .userLogged{
   color: white;
   font-weight: 500;
+}
+
+.card {
+  max-width: 600px;  /* Ajusta el tamaño máximo de la tarjeta */
+  margin: 20px auto; /* Centramos la tarjeta horizontalmente */
+}
+
+.carousel-inner img {
+  width: 100%;  /* Las imágenes ocuparán el 100% del contenedor del card */
+  height: 300px; /* Ajustamos la altura de las imágenes */
+  object-fit: cover; /* Para que las imágenes mantengan la proporción dentro del contenedor */
+}
+
+.fa-star {
+  font-size: 20px; /* Ajusta el tamaño según sea necesario */
+  color: lightgray; /* Color por defecto de las estrellas no seleccionadas */
+}
+
+.fa-star.checked {
+  color: gold; /* Color de las estrellas seleccionadas */
+}
+
+.comment {
+  border-bottom: 1px solid #ccc; /* Línea divisoria entre comentarios */
+  padding: 10px 15px; /* Espaciado entre comentarios */
+  margin: 10px 0; /* Espaciado vertical entre comentarios */
+  background-color: #f9f9f9; /* Fondo suave para los comentarios */
+  border-radius: 5px; /* Bordes redondeados para un estilo más suave */
+}
+
+.comments-section {
+  margin-left: 60px; /* Margen a la izquierda para toda la sección de comentarios */
+  margin-right: 60px; /* Margen a la derecha para toda la sección de comentarios */
+}
+
+.opinion {
+  border: 1px solid #ddd;
+  padding: 20px;
+  width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+}
+
+.opinion {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.rating-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating-form .stars {
+  display: flex;
+  flex-direction: row-reverse; /* Esto mantiene el orden correcto en el formulario */
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.stars input[type="radio"] {
+  display: none; /* Ocultar los botones de radio */
+}
+
+.stars label {
+  font-size: 30px;
+  color: #ddd; /* Estrellas grises por defecto */
+  cursor: pointer;
+}
+
+.stars input[type="radio"]:checked ~ label {
+  color: gold; /* Estrellas doradas cuando están seleccionadas */
+}
+
+/* Cambia el color de las estrellas seleccionadas y las anteriores */
+.stars input[type="radio"]:checked + label,
+.stars input[type="radio"]:checked + label ~ label {
+    color: gold;
+}
+
+.stars label:hover,
+.stars label:hover ~ label {
+  color: gold; /* Efecto hover, las estrellas doradas al pasar el ratón */
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  resize: none;
+}
+
+.my-button {
+  background-color: #fafafa;
+  color: rgb(8, 0, 0);
+  border: rgb(57, 52, 52);
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 12px;
+  padding: 5px 10px; 
+  width: 90px;
+  height: 40px;
+  margin-left: auto;
+}
+
+button:hover {
+  background-color: #1e68b8;
+}
+/* Estilos para los productos relacionados */
+.cursor-active {
+  cursor: pointer; /* Cambia el cursor a puntero para indicar que es interactivo */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Añade una transición suave para los efectos */
+}
+
+
+.cursor-active:hover {
+  transform: scale(1.05); /* Agranda la tarjeta cuando se pasa el mouse */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade una sombra más visible al pasar el mouse */
+}
+
+/* Modo oscuro */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.dark-mode .card {
+  background-color: #1e1e1e;
+  border-color: #333;
+  color:white;
+}
+
+.comments-section {
+  color:black;
+}
+
+.comment mb-4 {
+  color: black;
+
+}
+
+.mb-4 {
+  color:black;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+.form-switch {
+  margin-left: 20px;
+}
+
+.form-check-label {
+  color: white;
+}
+
+.comments-section {
+  background-color: #E0E0E0;
+}
+
+#comentarios {
+  background-color: #E0E0E0;
+}
+
+.comentarios {
+  margin-left: 60px;
+}
+
+.productosRelacionados {
+  margin-left: 60px;
 }

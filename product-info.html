@@ -33,16 +33,69 @@
           <li class="nav-item">
           </li>
         </ul>
+        <!-- Aquí va el menú desplegable de usuario -->
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- Aquí debería ir el nombre de usuario -->
+            Usuario
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+            <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
+          </ul>
+        </div>
+        <!-- Fin del menú desplegable de usuario -->
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="themeSwitch">
+          <label class="form-check-label" for="themeSwitch">Modo Noche</label>
+        </div>
+      </div>
+    </div>
+  </nav>
+      </div>
+      <div class="user-options"></div> <!-- Añadir esta línea -->
+      <div class="userLogged"></div>
       </div>
     </div>
   </nav>
   <main>
+    <div id="product-info"></div>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
-    </div>
-  </main>
+      <h1 id="nombreProducto"></h1>
+      <p id="descripcionProducto"></p>
+      <div id="imagenesProducto"></div>
+      <!-- Formulario de opinión -->
+      <h5>Dejanos tu opinión</h5>
+
+       <div class="opinion">
+        <form id="opinion-form" class="rating-form">
+        <div class="stars">
+          <input type="radio" id="star5" name="rating" value="5">
+          <label for="star5" class="fa fa-star"></label>
+          <input type="radio" id="star4" name="rating" value="4">
+          <label for="star4" class="fa fa-star"></label>
+          <input type="radio" id="star3" name="rating" value="3">
+          <label for="star3" class="fa fa-star"></label>
+          <input type="radio" id="star2" name="rating" value="2">
+          <label for="star2" class="fa fa-star"></label>
+          <input type="radio" id="star1" name="rating" value="1">
+          <label for="star1" class="fa fa-star"></label>
+        </div>
+          <textarea id="comentarios"  name="comentario" placeholder="Realiza un comentario"></textarea>
+          <button class="my-button" type="submit">Enviar</button>
+      </form>
+  </div>
+  <div class="opinion" id="comments-section"></div> <!-- Sección donde se agregarán los comentarios -->
+</div>
+    <div id="productosRelacionados" class="mt-4"></div>
+    <h5 class="productosRelacionados">Productos Relacionados</h5>
+    <div class="row" id="listaProductosRelacionados"></div>
+    <div class="col-lg-4 col-md-6 col-12">
+</div>
+  </main>  
+ 
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
@@ -62,6 +115,10 @@
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
   <script src="js/product-info.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>
