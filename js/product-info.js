@@ -49,56 +49,75 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p class="card-text"><strong>Categoría:</strong> ${product.category}</p>
                     <p class="card-text"><strong>Vendidos:</strong> ${product.soldCount}</p>
                     <p class="card-text"><strong>Precio:</strong> ${product.currency}: ${product.cost}</p>
+                    <button id="buy-button" class="btn btn-primary">Comprar</button> <!-- Botón "Comprar" -->
                 </div>
             </div>
         `;
-  // Verificar si hay productos relacionados
-  if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
-    console.error("No hay productos relacionados disponibles.");
-    return;
-}
 
-const relatedProductIDs = product.relatedProducts;
-console.log("Productos relacionados:", relatedProductIDs);
+        // Agregar el evento al botón "Comprar"
+        document.getElementById('buy-button').addEventListener('click', function() {
+            const productToBuy = {
+                id: product.id,
+                name: product.name,
+                cost: product.cost,
+                currency: product.currency,
+                image: product.images[0], 
+            };
 
-// Crear las promesas para obtener los productos relacionados
-const relatedProductsPromises = relatedProductIDs.map(relatedProduct => 
-    getJSONData(PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE)
-);
-const relatedProductsResponses = await Promise.all(relatedProductsPromises);
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItems.push(productToBuy);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
-// Asignar los productos relacionados a la variable global
-relatedProducts = relatedProductsResponses.map(response => response.data);
-console.log("Productos relacionados procesados:", relatedProducts);
+            // Redirigir a cart.html
+            window.location.href = 'cart.html';
+        });
 
-// Generar HTML de productos relacionados
-let listaProductosRelacionados = document.getElementById("listaProductosRelacionados");
-if (!listaProductosRelacionados) {
-    console.error("No se encontró el contenedor de productos relacionados.");
-    return;
-}
+        // Verificar si hay productos relacionados
+        if (!product.relatedProducts || !Array.isArray(product.relatedProducts) || product.relatedProducts.length === 0) {
+            console.error("No hay productos relacionados disponibles.");
+            return;
+        }
 
-let relatedProductsHTML = relatedProducts.map(relatedProduct => `
-    <div class="col-md-4">
-         <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${relatedProduct.id})">
-            <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="card-img-top img-fluid" />
-            <div class="card-body">
-            <h5 class="card-title">${relatedProduct.name}</h5>
-             <p class="card-text"><strong>Precio:</strong> ${relatedProduct.cost} ${relatedProduct.currency}</p>
-                <p class="card-text"><strong>Vendidos:</strong> ${relatedProduct.soldCount}</p>
+        const relatedProductIDs = product.relatedProducts;
+        console.log("Productos relacionados:", relatedProductIDs);
+
+        // Crear las promesas para obtener los productos relacionados
+        const relatedProductsPromises = relatedProductIDs.map(relatedProduct => 
+            getJSONData(PRODUCT_INFO_URL + relatedProduct.id + EXT_TYPE)
+        );
+        const relatedProductsResponses = await Promise.all(relatedProductsPromises);
+
+        // Asignar los productos relacionados a la variable global
+        relatedProducts = relatedProductsResponses.map(response => response.data);
+        console.log("Productos relacionados procesados:", relatedProducts);
+
+        // Generar HTML de productos relacionados
+        let listaProductosRelacionados = document.getElementById("listaProductosRelacionados");
+        if (!listaProductosRelacionados) {
+            console.error("No se encontró el contenedor de productos relacionados.");
+            return;
+        }
+
+        let relatedProductsHTML = relatedProducts.map(relatedProduct => `
+            <div class="col-md-4">
+                 <div class="card mb-4 shadow-sm cursor-active" onclick="setProductID(${relatedProduct.id})">
+                    <img src="${relatedProduct.images[0] || 'ruta/por_defecto.jpg'}" alt="${relatedProduct.name}" class="card-img-top img-fluid" />
+                    <div class="card-body">
+                        <h5 class="card-title">${relatedProduct.name}</h5>
+                        <p class="card-text"><strong>Precio:</strong> ${relatedProduct.cost} ${relatedProduct.currency}</p>
+                        <p class="card-text"><strong>Vendidos:</strong> ${relatedProduct.soldCount}</p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-`).join('');
+        `).join('');
 
-listaProductosRelacionados.innerHTML = relatedProductsHTML;
-
+        listaProductosRelacionados.innerHTML = relatedProductsHTML;
 
         // Agregar la sección de comentarios
         const commentsSection = document.createElement("div");
         commentsSection.classList.add("mt-4");
         commentsSection.innerHTML = `
-            <h5 class= "comments-section">Comentarios:</h5>
+            <h5 class="comments-section">Comentarios:</h5>
             ${productComments.map(comment => `
                 <div class="comment mb-3 comments-section">
                     <h6>${comment.user}</h6>
@@ -129,4 +148,3 @@ function getStars(score) {
     }
     return starsHTML;
 }
-
