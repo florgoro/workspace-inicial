@@ -36,11 +36,33 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+    <div class="container my-5">
+      <h1 class="text-center mb-5">Carrito de Compras</h1>
+  
+      <!-- Producto en el carrito -->
+      <div class="card mb-3">
+          <div class="row no-gutters">
+              <!-- Imagen del producto -->
+              <div class="col-md-4">
+                  <img src="https://via.placeholder.com/150" class="card-img" alt="Producto">
+              </div>
+              <!-- Información del producto -->
+              <div class="col-md-8">
+                  <div class="card-body">
+                      <h5 class="card-title">Nombre del Producto</h5>
+                      <p class="card-text">Precio: <span class="text-success">USD 150</span></p>
+                      <p class="card-text">Cantidad:
+                          <input type="number" class="form-control d-inline w-25" id="product-quantity" value="1">
+                      </p>
+                      <p class="card-text">Subtotal: <span class="font-weight-bold text-danger">USD 150</span></p>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
+  
+      <!-- Botón de finalizar compra -->
+      <button class="btn btn-primary btn-block" id="finalizar-compra">Finalizar Compra</button>
+  </div>
   </main>
   <footer class="text-muted">
     <div class="container">
