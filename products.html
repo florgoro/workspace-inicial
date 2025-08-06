@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>eMercado - Todo lo que busques está aquí</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark custom-bg p-1">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav w-100 justify-content-between">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="categories.html">Categorías</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sell.html">Vender</a>
+          </li>
+          <li class="nav-item">
+          </li>
+           <!-- Aquí se añade el nuevo ícono del carrito -->
+        <li class="nav-item">
+          <a href="cart.html" class="nav-link cart-icon">
+            <i class="fa fa-shopping-cart"></i>
+            <span id="cart-badge" class="badge">0</span>
+          </a>
+        </li>
+        <!-- Fin del nuevo ícono del carrito -->
+        </ul>
+        <!-- Aquí va el menú desplegable de usuario -->
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- Aquí debería ir el nombre de usuario -->
+            Usuario
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
+            </ul>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input theme-toggle" type="checkbox" role="switch" id="themeSwitch">
+            <label class="form-check-label" for="themeSwitch">
+              <span class="icon">🌞</span>
+            </label>
+          </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pb-5 container">
+    <div class="container" style="margin-top: 80px;"> <!-- Agregar margen superior aquí -->
+        <div class="text-center p-4">
+          <h2 id="pageTitle">Productos</h2>
+          <p class="lead" id="categoryDescription">Veras aquí todos los productos de la categoría <span id="categoryname"></span>.</p>
+        </div>
+        <div class="container">
+          <!-- Controles de Ordenación -->
+          <div class="row">
+            <div class="col text-end">
+              <div class="btn-group" role="group">
+                <!-- Ordenar por Precio Ascendente -->
+                <input type="radio" class="btn-check" name="options" id="sortPriceAsc" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="sortPriceAsc"> <i class="fas fa-sort-amount-down mr-1"></i> $</label>
+                
+                <!-- Ordenar por Precio Descendente -->
+                <input type="radio" class="btn-check" name="options" id="sortPriceDesc" autocomplete="off">
+                <label class="btn btn-outline-secondary" for="sortPriceDesc"> <i class="fas fa-sort-amount-up mr-1"></i> $</label>
+                
+                <!-- Ordenar por Relevancia (Cantidad Vendida) -->
+                <input type="radio" class="btn-check" name="options" id="sortByRelevance" autocomplete="off" checked>
+                <label class="btn btn-outline-secondary" for="sortByRelevance"><i class="fas fa-sort-amount-down mr-1"></i> Rel.</label>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Filtro por Rango de Precio -->
+          <div class="row">
+            <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
+              <div class="row container p-0 m-0">
+                <div class="col">
+                  <p class="font-weight-normal text-end my-2">Precio</p>
+                </div>
+                <div class="col">
+                  <input class="form-control" type="number" placeholder="mín." id="rangeFilterPriceMin">
+                </div>
+                <div class="col">
+                  <input class="form-control" type="number" placeholder="máx." id="rangeFilterPriceMax">
+                </div>
+                <div class="col-3 p-0">
+                  <div class="btn-group" role="group">
+                    <button class="btn btn-light btn-block" id="rangeFilterPrice">Filtrar</button>
+                    <button class="btn btn-link btn-sm" id="clearPriceFilter">Limpiar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!-- Contenedor para las tarjetas de productos -->
+      <div class="row" id="listaProductos"></div>
+      
+    </div>
+  </main>
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-end">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+    </div>
+  </footer>
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/index.js"></script>
+
+  <!-- Aquí agregamos el script que resetea los filtros de precio -->
+  <script>
+    document.getElementById('clearPriceFilter').addEventListener('click', function() {
+      document.getElementById('rangeFilterPriceMin').value = '';
+      document.getElementById('rangeFilterPriceMax').value = '';
+      minPrice = undefined;
+      maxPrice = undefined;
+      mostrarProductos(listaProductos);
+    });
+    </script>
+</body>
+</html>

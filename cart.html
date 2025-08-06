@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>eMercado - Todo lo que busques está aquí</title>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark custom-bg p-1">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav w-100 justify-content-between">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="categories.html">Categorías</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="sell.html">Vender</a>
+          </li>
+          <!-- Aquí se añade el nuevo ícono del carrito -->
+        <li class="nav-item">
+          <a href="cart.html" class="nav-link cart-icon">
+            <i class="fa fa-shopping-cart"></i>
+            <span id="cart-badge" class="badge">0</span>
+          </a>
+        </li>
+        <!-- Fin del nuevo ícono del carrito -->
+
+        </ul>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Usuario
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+            <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" id="logoutBtn">Cerrar sesión</a></li>
+          </ul>
+        </div>
+        <div class="form-check form-switch">
+          <input class="form-check-input theme-toggle" type="checkbox" role="switch" id="themeSwitch">
+          <label class="form-check-label" for="themeSwitch">
+              <span class="icon">🌞</span>
+          </label>
+      </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mt-5">
+    <h1>Carrito de Compras</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <div id="cartItems" class="cart-items-list"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card cart-summary-card p-3">
+              <div id="subtotal" class="mb-3"></div>
+              <div id="envioDomicilio" class="mb-3"><strong><p>Envio</p></strong></div>
+              <div id="cartTotal" class="mb-3"></div>
+             <div class="mb-3">
+                <label for="currencySwitch">Moneda:</label>
+                <select id="currencySwitch" class="form-select">
+                    <option value="USD" selected>Dólares (USD)</option>
+                    <option value="UYU">Pesos Uruguayos (UYU)</option>
+                </select>                
+             </div>
+              <!-- Opciones de Tipo de Envío -->
+            <div class="mb-3">
+              <label for="shippingType">Tipo de envío:</label>
+              <select id="shippingType" class="form-select">
+                <option value="">Seleccione una forma de envío</option>
+                  <option value="premium">Premium 2 a 5 días (15%)</option>
+                  <option value="express">Express 5 a 8 días (7%)</option>
+                  <option value="standard" selected>Standard 12 a 15 días (5%)</option>
+              </select>
+            </div>
+
+            <!-- Dirección de Envío -->
+            <div id="addressFields" class="mb-3">
+              <label>Dirección de envío:</label>
+              <input type="text" class="form-control mb-2" id="locality" placeholder="Localidad" required>
+              <input type="text" class="form-control mb-2" id="street" placeholder="Calle" required>
+              <input type="text" class="form-control mb-2" id="number" placeholder="Número" required>
+               <!-- Nuevos campos -->
+                <input type="text" class="form-control mb-2" id="department" placeholder="Departamento" required>
+                <input type="text" class="form-control mb-2" id="zipcode" placeholder="Código Postal" required>
+              </div>
+
+            <!-- Forma de Pago -->
+            <div class="mb-3">
+              <label for="paymentMethod">Forma de pago:</label>
+              <select id="paymentMethod" class="form-select">
+                <option value="" selected>Seleccione una forma de pago</option>
+                  <option value="creditCard" selected>Tarjeta de crédito</option>
+                  <option value="bankTransfer">Transferencia bancaria</option>
+              </select>
+            </div>
+
+            <!-- Botón de Finalizar Compra -->
+            <button id="checkoutBtn" class="btn btn-success w-100">Finalizar compra</button>
+            <div id="custom-alert" class="custom-alert hidden"></div>
+
+            <!-- Modal de Finalizar Compra -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkoutModalLabel">Finalizar compra</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p id="modalMessage">Por favor, completa todos los campos de dirección antes de continuar.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+      </div>
+  </div>
+  <button id="emptyCartBtn" class="btn btn-danger w-100 mb-2">Vaciar Carrito</button>
+  <a href="index.html" class="btn btn-primary w-100">Volver a la tienda</a>
+  <div id="alert" class="alert" style="display:none;"></div>
+
+  <!-- Modal para confirmación de eliminación-->
+  <div id="confirmModal" class="modal-alert" style="display: none;">
+    <div class="modal-container">
+      <p id="confirmMessage">¿Estás seguro de que deseas eliminar este producto?</p>
+      <div class="modal-buttons">
+        <button id="confirmYes" class="btn btn-danger">Sí</button>
+        <button id="confirmNo" class="btn btn-secondary">No</button>
+      </div>
+    </div>
+  </div>
+</main>
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-end">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jóvenes a Programar</a></p>
+    </div>
+  </footer>
+
+  <div id="spinner-wrapper">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const cartItemsContainer = document.getElementById("cartItems");
+        const cartTotalContainer = document.getElementById("cartTotal");
+        const subtotalContainer = document.getElementById("subtotal");
+        const emptyCartBtn = document.getElementById("emptyCartBtn");
+    
+        const updateCartDisplay = () => {
+            const cart = JSON.parse(localStorage.getItem("cart")) || []; // Recuperar el carrito
+            let total = 0;
+            let subtotal = 0; // Inicializar subtotal
+            cartItemsContainer.innerHTML = ''; // Limpiar contenedor
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+                cartTotalContainer.innerHTML = ''; // Limpiar total si no hay productos
+                subtotalContainer.innerHTML = ''; // Limpiar subtotal si no hay productos
+            } else {
+                cart.forEach(product => {
+                    const productSubtotal = product.cost * product.quantity; // Calcular subtotal por producto
+                    total += productSubtotal; // Sumar al total general
+                    subtotal += productSubtotal; // Sumar al subtotal
+                    
+                    cartItemsContainer.innerHTML += `
+                        <div class="cart-item mb-3">
+                            <img src="${product.image}" class="cart-item-image" alt="${product.name}">
+                            <div class="cart-item-info">
+                                <h5>${product.name}</h5>
+                                <p class="price">Precio: ${product.cost} USD</p>
+                                <p class="quantity">Cantidad: ${product.quantity}</p>
+                                <p><strong>Subtotal: ${(productSubtotal).toFixed(2)} USD</strong></p>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                // Mostrar subtotal y total del carrito
+                const shippingCost = 200; // Costo de envío
+                const totalWithShipping = total + shippingCost; // Total incluyendo envío
+                subtotalContainer.innerHTML = `<h4>Subtotal: ${subtotal.toFixed(2)} UYU</h4>`;
+                cartTotalContainer.innerHTML = `<h4 class="total">Total: ${totalWithShipping.toFixed(2)} UYU</h4>`;
+            }
+        };
+
+        // Inicializar la visualización del carrito
+        updateCartDisplay();
+
+        // Función para vaciar el carrito
+        emptyCartBtn.addEventListener("click", () => {
+            localStorage.removeItem("cart"); // Eliminar el carrito de localStorage
+            updateCartDisplay(); // Actualizar la visualización
+        });
+    });
+  </script>
+  <script src="js/cart.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/alerts.js"></script>
+
+  <script src="js/login.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
